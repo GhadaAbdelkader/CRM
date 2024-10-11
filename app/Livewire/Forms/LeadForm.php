@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Lead;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -16,15 +17,63 @@ class LeadForm extends Form
     public function rules(): array
     {
         return [
-            'lead_status' => 'required',
-            'lead_owner' => 'required|max:255',
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|email',
-            'phone' => 'required',
+            'lead_status' => 'required|string', // Required and should be a string
+            'lead_owner' => 'required|string|max:255', // Required, should be a string, and has a max length of 255
+            'first_name' => 'required|string|max:255', // Required, should be a string, and has a max length of 255
+            'last_name' => 'required|string|max:255', // Required, should be a string, and has a max length of 255
+            'email' => 'required|email|max:255', // Required, should be a valid email, and has a max length of 255
+            'phone' => 'required|string|regex:/^[0-9\+\-\s]*$/|max:20|min:11', // Required, should be a string, and has a max length of 20
+            'lead_source' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'company' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'rate' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'industry' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'no_of_employees' => 'nullable|integer|max:100000',
+            'address' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'street' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'city' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'state_province' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'zip_postal_code' => 'nullable|string|max:20', // Optional, should be a string, and has a max length of 20
+            'country' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
 
         ];
-    }public function setLead(Lead $lead)
+
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function personalRules(): array
+    {
+
+        $this->validate([
+            'lead_status' => 'required|string|not_in:0', // Required and should be a string
+            'lead_owner' => 'required|string|max:255', // Required, should be a string, and has a max length of 255
+            'first_name' => 'required|string|max:255', // Required, should be a string, and has a max length of 255
+            'last_name' => 'required|string|max:255', // Required, should be a string, and has a max length of 255
+            'email' => 'required|email|max:255', // Required, should be a valid email, and has a max length of 255
+            'phone' => 'required|string|regex:/^[0-9\+\-\s]*$/|max:20|min:11', // Required, should be a string, and has a max length of 20
+
+            ]);
+        return [];
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function companyRules(): array
+    {
+        $this->validate([
+            'company' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'rate' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'industry' => 'nullable|string|max:255', // Optional, should be a string, and has a max length of 255
+            'no_of_employees' => 'nullable|integer|max:100000',
+            'lead_source' => 'required|string|max:255',
+        ]);
+        return [];
+    }
+
+
+    public function setLead(Lead $lead)
     {
         $this->lead = $lead;
         $this->lead_status = $lead->lead_status;
@@ -49,7 +98,7 @@ class LeadForm extends Form
     }
     public function resetFields()
     {
-        $this->lead_status = 'none';
+        $this->lead_status = '';
         $this->lead_owner = '';
         $this->salutation = '';
         $this->first_name = '';
@@ -58,10 +107,10 @@ class LeadForm extends Form
         $this->email = '';
         $this->phone = '';
         $this->company = '';
-        $this->rate = 'cold';
+        $this->rate = '';
         $this->industry = '';
-        $this->no_of_employees = '';
-        $this->lead_source = 'other';
+        $this->no_of_employees = '0';
+        $this->lead_source = '';
         $this->address = '';
         $this->street = '';
         $this->city = '';

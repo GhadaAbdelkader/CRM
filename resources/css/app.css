@@ -1,4 +1,5 @@
 @import "flowbite";
+@import "../../public/assets/css/style.css";
 
 @tailwind base;
 @tailwind components;
