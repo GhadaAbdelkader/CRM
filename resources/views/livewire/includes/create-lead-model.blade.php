@@ -4,20 +4,17 @@
            }"
      x-show="showModal"
      x-init="
-                // Watch currentTab for changes (optional, for logging or debugging)
                 $watch('currentTab', value => {
                     console.log('Current tab:', value);
                 });
 
-                // Watch completedTabs for changes (optional, for logging or debugging)
                 $watch('completedTabs', value => {
                     console.log('Completed tabs updated:', value);
                 });
 
-                // Listen for the 'tabChanged' event from Livewire to update currentTab
                 Livewire.on('tabChanged', (tab, completedTabs) => {
                     currentTab = tab;
-                    completedTabs = completedTabs; // Update completed tabs in Alpine.js
+                    completedTabs = completedTabs;
                 });
             "
      class="fixed z-10 inset-0 overflow-y-auto" style="display: block; background-color: rgba(179, 179, 179, 0.23); z-index: 50;">
@@ -78,7 +75,8 @@
                                                     <label for="salutation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salutation
                                                         <svg class="inline mb-2 " xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#EA3323"><path d="m321-252 43-177-141-119 184-16 73-167 73 168 184 15-141 119 43 177-159-94-159 94Z"/></svg>
                                                     </label>
-                                                    <select id="salutation" wire:model="form.salutation" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    <select id="salutation" wire:model="form.salutation"
+                                                            class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                         <option class="text-teal-600" value="0"  selected>Select Salutation</option>
                                                         <option value="Mr">Mr</option>
                                                         <option value="Ms">Ms</option>
@@ -120,8 +118,26 @@
                                                     <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
                                                         <svg class="inline mb-2 " xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#EA3323"><path d="m321-252 43-177-141-119 184-16 73-167 73 168 184 15-141 119 43 177-159-94-159 94Z"/></svg>
                                                     </label>
-                                                    <input id="phone" type="text" wire:model="form.phone" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                                    <input id="phone" type="text" wire:model="form.phone"
+                                                           class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                                     @error('form.phone')<p class="text-red-600">{{ $message }}</p>@enderror
+                                                </div>
+                                                <div class="mb-5">
+                                                    <label for="gender">Gender:</label>
+                                                    <select wire:model.defer="form.gender" id="gender" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        <option value="">Select Gender</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                    </select>
+                                                    @error('form.gender')<p class="text-red-600">{{ $message }}</p>@enderror
+
+                                                </div>
+                                                <div class="mb-5">
+                                                    <label for="birthday">Birthday:</label>
+                                                    <input type="date" wire:model.defer="form.birthday" id="birthday"
+                                                           class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                                    @error('form.birthday')<p class="text-red-600">{{ $message }}</p>@enderror
+
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +180,8 @@
                                                     <label for="lead_source" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lead Source
                                                         <svg class="inline mb-2 " xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#EA3323"><path d="m321-252 43-177-141-119 184-16 73-167 73 168 184 15-141 119 43 177-159-94-159 94Z"/></svg>
                                                     </label>
-                                                    <select id="lead_source" wire:model="form.lead_source" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    <select id="lead_source" wire:model="form.lead_source"
+                                                            class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                         <option class="text-teal-600" value="0"  selected>Select Source</option>
                                                         <option value="website">Website</option>
                                                         <option value="employee_referral">Employee Referral</option>
@@ -182,40 +199,27 @@
                                         <!-- Address Tab -->
                                         <div x-show="currentTab === 'address'">
                                             <div class="grid grid-cols-2 gap-2">
-                                                <div class="mb-5">
-                                                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                                                    <input id="address" type="text" wire:model="form.address" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('form.address')<p class="text-red-600">{{ $message }}</p>@enderror
-                                                </div>
+                                                <livewire:location-dropdown />
+                                                <div>
+                                                    <div class="mb-5">
+                                                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+                                                        <input id="address" type="text" wire:model="form.address" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        @error('form.address')<p class="text-red-600">{{ $message }}</p>@enderror
+                                                    </div>
 
-                                                <div class="mb-5">
-                                                    <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
-                                                    <input id="city" type="text" wire:model="form.city" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('form.city')<p class="text-red-600">{{ $message }}</p>@enderror
-                                                </div>
 
-                                                <div class="mb-5">
-                                                    <label for="state_province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
-                                                    <input id="state_province" type="text" wire:model="form.state_province" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('form.state_province')<p class="text-red-600">{{ $message }}</p>@enderror
-                                                </div>
+                                                    <div class="mb-5">
+                                                        <label for="street" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Street</label>
+                                                        <input id="street" type="text" wire:model="form.street" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        @error('form.street')<p class="text-red-600">{{ $message }}</p>@enderror
+                                                    </div>
 
-                                                <div class="mb-5">
-                                                    <label for="street" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Street</label>
-                                                    <input id="street" type="text" wire:model="form.street" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('form.street')<p class="text-red-600">{{ $message }}</p>@enderror
-                                                </div>
+                                                    <div class="mb-5">
+                                                        <label for="zip_postal_code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zip</label>
+                                                        <input id="zip_postal_code" type="text" wire:model="form.zip_postal_code" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        @error('form.zip_postal_code')<p class="text-red-600">{{ $message }}</p>@enderror
+                                                    </div>
 
-                                                <div class="mb-5">
-                                                    <label for="zip_postal_code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zip</label>
-                                                    <input id="zip_postal_code" type="text" wire:model="form.zip_postal_code" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('form.zip_postal_code')<p class="text-red-600">{{ $message }}</p>@enderror
-                                                </div>
-
-                                                <div class="mb-5">
-                                                    <label for="country" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
-                                                    <input id="country" type="text" wire:model="form.country" class="py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('form.country')<p class="text-red-600">{{ $message }}</p>@enderror
                                                 </div>
                                             </div>
                                         </div>

@@ -2,8 +2,12 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\LeadForm;
-use App\Models\Lead; // Ensure this is imported
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Lead;
+use App\Models\State;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,11 +16,14 @@ class LeadComponent  extends Component
     use WithPagination;
     public LeadForm $form;
     public $isOpen = false;
-//    public $leads;
     public $search;
-    public string $currentTab = 'personal'; // For managing active tab
-    public array $completedTabs = []; // Array to keep track of completed tabs
+    public string $currentTab = 'personal';
+    public array $completedTabs = [];
     use WithPagination;
+
+
+
+
     public function render()
     {
         $leads = Lead::where('first_name', 'like', "%{$this->search}%")
@@ -24,14 +31,12 @@ class LeadComponent  extends Component
             ->paginate(5); // Execute the query and get the collection
 
         return view('livewire.lead', [
-            'leads' => $leads
+            'leads' => $leads,
+             'countries' => $this->form->country,
         ])->layout('layouts.app');
     }
 
-    public function showCreate()
-    {
-        return view('livewire.create')->layout('layouts.app');
-    }
+
     public function create()
     {
         $this->form->resetFields();
@@ -83,10 +88,18 @@ class LeadComponent  extends Component
         $this->dispatch('tabChanged', $this->currentTab);
 
     }
+    protected $listeners = ['locationUpdated'];
+
+    public function locationUpdated($country, $state_province, $city)
+    {
+        \Log::info('Location updated: ', compact('country', 'state_province', 'city'));
+
+        $this->form->locationUpdated($country, $state_province, $city);
+    }
     public function store()
     {
         $this->validate();
-//dd( $this->validate());
+        $this->form->resolveValues();
         $lead =  Lead::create(
             $this->form->all()
         );
