@@ -14,25 +14,21 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-
+        <x-head.tinymce-config/>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
 
             <div class="flex ">
-                <div>
+                <div id="sidebar" class="w-64 transition-width duration-300">
                     @livewire('sidebar')
                 </div>
             <!-- Page Heading -->
-                <div class="flex-1 flex flex-col">
+                <div  id="content"  class="flex-1 flex flex-col  transition-margin duration-300 ease-in-out">
+
+
                     <livewire:layout.navigation />
-                    @if (isset($header))
-                        <header class="bg-white shadow ml-2">
-                            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                                {{ $header }}
-                            </div>
-                        </header>
-                    @endif
+
 
                     <main class="mt-2">
                         {{ $slot }}
@@ -44,6 +40,21 @@
 
         </div>
         @livewireScripts
+        <script>
+            Livewire.on('sidebarToggled', function(isOpenArray) {
+                const isOpen = isOpenArray[0];
 
+                const content = document.getElementById('content');
+
+                if (isOpen) {
+                    content.style.marginLeft = '0rem'; // Sidebar open
+
+                } else {
+                    content.style.marginLeft = '-12rem'; // Sidebar open
+
+                }
+            });
+
+        </script>
     </body>
 </html>

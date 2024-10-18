@@ -16,10 +16,7 @@ class CreateLead  extends Component
     {
         return view('livewire.create')->layout('layouts.app');
     }
-//    public function updatedForm()
-//    {
-//        $this->validate();
-//    }
+
     /**
      * @throws ValidationException
      */

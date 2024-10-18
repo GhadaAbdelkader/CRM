@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'Country' => Rinvex\Country\Facades\Country::class,
     /*
     |--------------------------------------------------------------------------
     | Application Name
