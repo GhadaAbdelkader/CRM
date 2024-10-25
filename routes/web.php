@@ -22,4 +22,11 @@ Route::get('/leads/{lead}', EditLead ::class)->name('lead.account');
 
 Route::get('/email-marketing', EmailMarketing::class)->name('email.marketing');
 
+//Route::get('/send-mail', function () {
+//    \Mail::raw('This is a test email', function ($message) {
+//        $message->to('test@example.com')->subject('Test Email');
+//    });
+//
+//    return 'Email sent!';
+//});
 require __DIR__.'/auth.php';

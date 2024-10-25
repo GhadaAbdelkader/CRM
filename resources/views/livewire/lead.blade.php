@@ -154,7 +154,13 @@
                     <td class="px-6 py-4">
                         {{ $lead->email ?? 'N/A' }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4" :class="{
+    'text-blue-600': lead.lead_status === 'New',
+    'text-yellow-600': lead.lead_status === 'Working',
+    'text-green-600': lead.lead_status === 'Nurturing',
+    'text-purple-600': lead.lead_status === 'Qualified',
+    'bg-red-600': lead.lead_status === 'Unqualified'
+}">
                         {{ $lead->lead_status ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">

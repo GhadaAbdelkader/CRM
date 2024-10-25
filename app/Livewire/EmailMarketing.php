@@ -13,8 +13,26 @@ class EmailMarketing extends Component
     public $ages = []; // This will hold all unique ages
     public $selectedLeads = []; // Selected leads for sending
     public $step = 1; // Keep track of the current step
-    use WithPagination;
+    public $selectedDiv = 1; // Default selection
+    public $subject = '';
+    public $body = '';
+    public $signature = '';
 
+    use WithPagination;
+    public function updatedSubject()
+    {
+        $this->dispatch('updateTemplate', $this->subject, $this->body, $this->signature);
+    }
+
+    public function updatedBody()
+    {
+        $this->dispatch('updateTemplate', $this->subject, $this->body, $this->signature);
+    }
+
+    public function updatedSignature()
+    {
+        $this->dispatch('updateTemplate', $this->subject, $this->body, $this->signature);
+    }
     public function render()
     {
         return view('livewire.email-marketing', [
@@ -77,9 +95,11 @@ class EmailMarketing extends Component
 
             // Get the filtered leads
             $this->leads = $query->get();
+            $this->selectedLeads = $this->leads->isNotEmpty() ? $this->leads->pluck('id')->toArray() : [];
         } else {
-            // If no filters are applied, do not load any leads
+            // If no filters are applied, reset the leads and selected leads
             $this->leads = [];
+            $this->selectedLeads = [];
         }
     }
 
@@ -90,7 +110,11 @@ class EmailMarketing extends Component
         $this->selectedLeads = $this->leads;
 
         // Move to step 2 (the email composition step)
-        $this->step = 2;
+        if ($this->step === 1) {
+            $this->step = 2; // Move from step 1 to step 2
+        } elseif ($this->step === 2) {
+            $this->step = 3; // Move from step 2 to step 3
+        }
     }
     public function goToPreviousStep()
     {
@@ -107,12 +131,21 @@ class EmailMarketing extends Component
             return; // Stop execution if there are no selected leads
         }
 
-        foreach ($this->selectedLeads as $lead) {
-            // Add debug information
+        $leads = \App\Models\Lead::whereIn('id', $this->selectedLeads)->get();
+
+        foreach ($leads as $lead) {
             \Log::info("Sending email to: {$lead->email}");
 
-            // Send emails to the filtered leads
-            \Mail::to($lead->email)->send(new \App\Mail\MarketingEmail($lead));
+            \Mail::to($lead->email)->send(
+                new \App\Mail\MarketingEmail(
+                    $lead,
+                    $this->selectedDiv,
+                    $this->subject,
+                    $this->body,
+                    $this->signature
+                )
+            );
+            sleep(1); // Wait for 1 second between emails
         }
 
         session()->flash('message', 'Emails sent successfully to the selected leads.');
