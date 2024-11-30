@@ -113,6 +113,7 @@ class LeadComponent  extends Component
     {
         return redirect()->route('lead.account', ['lead' => $id]);
     }
+
     public function delete(Lead $lead)
     {
         $lead->delete();
