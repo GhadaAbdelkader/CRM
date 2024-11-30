@@ -62,7 +62,7 @@
                 </button>
 
 
-                <ul x-bind:class="isOpen ? '' : 'shadow absolute bg-white left-16 p-8 rounded-md'" id="email-marketing" class="hidden py-2 space-y-2">
+                <ul x-bind:class="isOpen ? '' : 'shadow absolute bg-white left-16 p-8 rounded-md'" id="cd cdemail-marketing" class="hidden py-2 space-y-2">
                     <li >
                         <a href="{{ route('email.marketing') }}"  :class=" isOpen ? 'pl-11' : 'pr-11'" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg  group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Email Marketing</a>
                     </li>
