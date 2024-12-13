@@ -16,6 +16,8 @@
     },
     "dependencies": {
         "alpinejs": "^3.14.1",
-        "flowbite": "^2.5.1"
+        "flowbite": "^2.5.1",
+        "jquery": "^3.7.1",
+        "jquery.nicescroll": "^3.7.6"
     }
 }

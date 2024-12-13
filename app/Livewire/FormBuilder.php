@@ -9,23 +9,24 @@ use Livewire\Component;
 #[AllowDynamicProperties] class FormBuilder extends Component
 {
     public $elements = [];
-    public $fontsize;
-    public $fontcolor;
-    public $padding;
+    public $layoutIndex;
+    public $sectionIndex;
+    public $fieldType;
+
     public $availableFields = [
-        'text'     => ['label' => 'Text Field', 'icon'    => 'text_fields'],
-        'textarea' => ['label' => 'Paragraph', 'icon'     => 'article'],
-        'select'   => ['label' => 'Dropdown', 'icon'      => 'arrow_drop_down'],
-        'radio'    => ['label' => 'Radio Button', 'icon'  => 'radio_button_checked'],
-        'checkbox' => ['label' => 'Checkbox', 'icon'      => 'select_check_box'],
-        'date'     => ['label' => 'Date', 'icon'          => 'calendar_month'],
-        'time'     => ['label' => 'Time', 'icon'          => 'history_toggle_off'],
-        'number'   => ['label' => 'Number', 'icon'        => '123'],
-        'file'     => ['label' => 'File Upload', 'icon'   => 'upload_file'],
-        'email'    => ['label' => 'Email Field', 'icon'   => 'mail'],
-        'image'    => ['label' => 'Image Upload', 'icon'  => 'image'],
-        'header'   => ['label' => 'Form Header', 'icon'   => 'format_h1'],
-        'section'  => ['label' => 'Section Break', 'icon' => 'more_horiz'],
+        'text'     => ['label' => 'Text Field',   'icon'    => 'text_fields'],
+        'Paragraph'=> ['label' => 'Paragraph',     'icon'   => 'article'],
+        'select'   => ['label' => 'Dropdown',      'icon'   => 'arrow_drop_down'],
+        'radio'    => ['label' => 'Radio Button',  'icon'   => 'radio_button_checked'],
+        'checkbox' => ['label' => 'Checkbox',      'icon'   => 'select_check_box'],
+        'date'     => ['label' => 'date',          'icon'   => 'calendar_month'],
+        'time'     => ['label' => 'Time',           'icon'  => 'history_toggle_off'],
+        'number'   => ['label' => 'Number',         'icon'  => '123'],
+        'file'     => ['label' => 'File Upload',     'icon' => 'upload_file'],
+        'email'    => ['label' => 'Email Field',     'icon' => 'mail'],
+        'image'    => ['label' => 'Image Upload',    'icon' => 'image'],
+        'header'   => ['label' => 'Form Header',     'icon' => 'format_h1'],
+        'break'  => ['label' => 'Section Break',   'icon'=> 'more_horiz'],
     ];
     public $layouts = [
         'single' => 'Single Column Layout',
@@ -57,16 +58,26 @@ use Livewire\Component;
             'id' => $uniqueId,
             'type' => $field['type'],
             'label' => ucfirst($field['type']),
+            'value' => '',
+            'required' => false,
             'options'=> ['Option 1', 'Option 2', 'Option 3'] // Example options
-        ];
 
+        ];
+        if ($field['type'] === 'select') {
+            $newElement['options'] = ['Option 1', 'Option 2', 'Option 3']; // Example options
+        }
         if ($field['type'] === 'layout') {
             $sectionCount = $field['layoutType'] === 'single' ? 1 : ($field['layoutType'] === 'double' ? 2 : 3);
             $newElement = [
                 'id' => $uniqueId,
                 'type' => 'layout',
                 'layoutType' => $field['layoutType'],
+                'label' => ucfirst($field['type']),
+                'value' => '',
+                'required' => false,
                 'sections' => array_fill(0, $sectionCount, []),
+                'options'=> ['Option 1', 'Option 2', 'Option 3'] // Example options
+
             ];
         }
 
@@ -82,6 +93,18 @@ use Livewire\Component;
 
         return $index;
     }
+//    public function addOption($layoutIndex, $sectionIndex, $fieldIndex)
+//    {
+//        $this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][$fieldIndex]['options'][] = 'New Option';
+//    }
+//
+//    public function removeOption($layoutIndex, $sectionIndex, $fieldIndex, $optionIndex)
+//    {
+//        unset($this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][$fieldIndex]['options'][$optionIndex]);
+//        $this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][$fieldIndex]['options'] = array_values(
+//            $this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][$fieldIndex]['options']
+//        );
+//    }
 
     public function saveStyles()
     {
@@ -90,11 +113,40 @@ use Livewire\Component;
 
     public function addFieldToSection($layoutIndex, $sectionIndex, $fieldType)
     {
-        $this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][] = [
+        $field = [
+            'id' => uniqid(),
             'type' => $fieldType,
-            'label' => $this->availableFields[$fieldType],
-        ];
+            'label' => $this->availableFields[$fieldType]['label'],
+            'value' => '',
+            'required' => false,
+            ];
+
+//        if ($fieldType === 'select') {
+//            $field['options'] = ['Option 1', 'Option 2', 'Option 3'];
+//        }
+
+        $this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][] = $field;
     }
+
+    public function updateField($layoutIndex, $sectionIndex, $fieldIndex, $key, $value)
+    {
+        $this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][$fieldIndex][$key] = $value;
+        dd($this->elements[$layoutIndex]['sections'][$sectionIndex]['fields'][$fieldIndex][$key] = $value);
+
+    }
+//    public function saveElement($id)
+//    {
+//        foreach ($this->elements as &$element) {
+//            if ($element['id'] === $id) {
+//                // تحديث خصائص العنصر إذا لزم الأمر
+//                // لا حاجة لتحديث مباشرة لأن البيانات مرتبطة تلقائيًا بـ Livewire
+//                break;
+//            }
+//        }
+//
+//        // تسجيل عملية الحفظ إن لزم
+//        Log::info('Element saved', ['id' => $id]);
+//    }
 
     public function removeElement($id)
     {
@@ -106,11 +158,10 @@ use Livewire\Component;
     }
     public function removeLayout($id)
     {
-        // Logic to remove the entire layout
-        if (isset($this->elements[$id])) {
-            // Remove the layout
-            array_splice($this->elements, $id, 1);
-        }
+        $this->elements = array_filter($this->elements, function ($element) use ($id) {
+            return $element['id'] !== $id;
+        });
+        $this->elements = array_values($this->elements);
     }
     public function removeFieldFromSection($layoutIndex, $sectionIndex, $fieldIndex)
     {
