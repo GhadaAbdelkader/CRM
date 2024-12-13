@@ -1,0 +1,127 @@
+
+                                                @elseif ($field['type'] === 'email')
+                                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input type="email" placeholder="Email Input" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    />
+                                                @elseif ($field['type'] === 'image')
+                                                    <label for="file" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input type="file" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    />
+                                                @elseif ($field['type'] === 'label')
+                                                    <span
+                                                        @click="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement);"
+                                                    >{{ $field['label'] ?? 'Default Label' }}</span>
+
+                                                @elseif ($field['type'] === 'Paragraph')
+                                                    <label for="textarea" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <textarea id="textarea"  name="textarea" rows="4" cols="50" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                              @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                              :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                              @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    ></textarea>
+
+
+                                                @elseif ($field['type'] === 'date')
+                                                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input id="date" type="date" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    >
+                                                @elseif ($field['type'] === 'file')
+                                                    <label for="file" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input id="file" type="file" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    >
+                                                @elseif ($field['type'] === 'time')
+                                                    <label for="time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input id="time" type="time" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    >
+                                                @elseif ($field['type'] === 'number')
+                                                    <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input id="number" type="number" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    >
+                                                @elseif ($field['type'] === 'checkbox')
+                                                    <label for="checkbox" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</label>
+                                                    <input id="checkbox" type="checkbox" class=" py-1.5 bg-gray-50  text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                           @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                           :required="$wire.get(`elements.{{ $index }}.required`, false)"
+                                                           @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    >
+                                                @elseif ($field['type'] === 'header')
+                                                    <h1 class="py-1.5 text-lg text-gray-900  focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        @click.stop="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement)"
+                                                        @input="$wire.set(`elements.{{ $index }}.fields[{{ $fieldIndex }}].value`, $event.target.value)"
+                                                    >{{ $elements[$index]['fields'][$fieldIndex]['type'] ?? 'Default lable' }}</h1>
+                                                @elseif ($field['type'] === 'break')
+                                                    <hr @click="selectedElement = '{{ $field['id'] }}'; $wire.set('selectedElement', selectedElement);">
+
+
+
+
+
+                @elseif ($element['type'] === 'email')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <input id="email" type="email" placeholder="Email Input" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           :required="selectedElement === '{{ $element['id'] }}' && $wire.get('elements.{{ $index }}.required', false)"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement); "
+                    />
+                @elseif ($element['type'] === 'image')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <input id="image" type="file" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);"
+                    />
+                @elseif ($element['type'] === 'label')
+                    <span
+                        @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);"
+                    >{{ $element['label'] }}</span>
+                @elseif ($element['type'] === 'Paragraph')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <textarea id="textarea"  name="textarea" rows="4" cols="50" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);"
+                    >
+                    </textarea>
+
+
+                @elseif ($element['type'] === 'date')
+                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                    <input id="date" type="date" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);">
+                @elseif ($element['type'] === 'file')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <input id="file" type="file" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);">
+                @elseif ($element['type'] === 'time')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <input id="time" type="time" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);">
+                @elseif ($element['type'] === 'number')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <input id="number" type="number" class="w-full py-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);">
+                @elseif ($element['type'] === 'checkbox')
+                    <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ $element['label'] ?? 'Default Label' }}</label>
+                    <input id="checkbox" type="checkbox" class="py-1.5 bg-gray-50 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);">
+                @elseif ($element['type'] === 'header')
+                    <h1 class="py-1.5 text-lg text-gray-900  focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);"
+                    >{{ $element['label'] ?? 'Default Label' }}</h1>
+                @elseif ($element['type'] === 'break')
+                    <hr class="cursor-pointer h-[2px]"
+                        @click="selectedElement = '{{ $element['id'] }}'; $wire.set('selectedElement', selectedElement);"
+                    >
